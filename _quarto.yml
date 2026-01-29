@@ -77,6 +77,10 @@ book:
       chapters:
       - ica/cleaning.qmd
 
+    - part: "Homework"
+      chapters:
+      - tt/hw01-tt.qmd
+
     - part: "Extras"
       chapters:
       - extra/extra-sample1.qmd
