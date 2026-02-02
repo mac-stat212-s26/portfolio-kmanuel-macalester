@@ -1,0 +1,55 @@
+---
+title: "Homework 01"
+---
+
+
+## TidyTuesday Section
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
+
+Date: 2026-01-27
+Data: Brazilian Companies
+Source: Open data CNPJ - December 2025
+Article: Wikipedia's List of largest Brazilian companies 
+
+# Research Question:
+What is the relationship between a Brazilian companies' size and their legal nature?
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+```
+
+
+```{r}
+companies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/companies.csv')
+legal_nature <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/legal_nature.csv')
+qualifications <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/qualifications.csv')
+size <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/size.csv')
+```
+
+```{r}
+companies_clean <- companies |> 
+  mutate(companysizeclean = case_when(
+    company_size == "micro-enterprise" ~ "micro",
+    company_size == "small-enterprise" ~ "small",
+    company_size == "other" ~ "other"
+  ))
+
+companies_clean |> 
+  group_by(legal_nature, company_size) |> 
+  summarize(n())
+```
+
+
+```{r}
+companies_clean |> 
+  ggplot(aes(x = companysizeclean, fill = legal_nature)) +
+  geom_bar() +
+  labs(x = "Company Size", y = "Number of Companies", fill = "Legal Nature", 
+       title = "Brazilian Company Size and Legal Nature") +
+  scale_fill_viridis_d()
+```
+
+# Brazilian Companies: How does their legal nature differ with copmany size? 
+This week's TidyTuesday challenge utilizes data on Brazilian companies from the Brazilian Ministry of Finance. Based on the example research questions provided, the visualization above aims to answer the following question: What is the relationship between a Brazilian companies' size and their legal nature? As such, the visualization focuses specifically on two key variables: Brazilian company size and Brazilian company legal natures. It ultimately finds that micro-companies are the largest company category by size, with "other" and small companies lagging behind. We also find that across all three categories, "LLC" is the most popular legal nature by far compared to the other 21 possible designations. State-Owned Enterprise slowly lags behind for both micro and small companies, but is noticeably absent for companies in the "other" category. Instead, silent partnerships and privately held corporations are more common after LLC.  All other legal designations are relatively rare. 
