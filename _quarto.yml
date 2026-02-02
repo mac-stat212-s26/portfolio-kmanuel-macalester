@@ -76,6 +76,7 @@ book:
     - part: "In-Class Activities"
       chapters:
       - ica/cleaning.qmd
+      - 03-adv-ggplot-notes.qmd
 
     - part: "Homework"
       chapters:
