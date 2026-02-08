@@ -21,25 +21,36 @@
     ]
   },
   {
-    "objectID": "tt/2025-07-08.html",
-    "href": "tt/2025-07-08.html",
-    "title": "TidyTuesday Sample 1",
+    "objectID": "tt/hw01-tt.html",
+    "href": "tt/hw01-tt.html",
+    "title": "Homework 01",
     "section": "",
-    "text": "Add content here",
+    "text": "TidyTuesday Section\nExplore the week’s TidyTuesday challenge. Develop a research question, then answer it through a short data story with effective visualization(s). Provide sufficient background for readers to grasp your narrative.\nDate: 2026-01-27 Data: Brazilian Companies Source: Open data CNPJ - December 2025 Article: Wikipedia’s List of largest Brazilian companies",
     "crumbs": [
       "TidyTuesday",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>TidyTuesday Sample 1</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Homework 01</span>"
     ]
   },
   {
-    "objectID": "tt/2025-07-15.html",
-    "href": "tt/2025-07-15.html",
-    "title": "TidyTuesday Sample 2",
+    "objectID": "tt/hw02-tt.html",
+    "href": "tt/hw02-tt.html",
+    "title": "Homework 02",
     "section": "",
-    "text": "Add content here",
+    "text": "TidyTuesday Section (optional)\nExplore the week’s TidyTuesday challenge. Develop a research question, then answer it through a short data story with effective visualization(s). Provide sufficient background for readers to grasp your narrative.\nDate: 2026-02-03 Data: Edible Plants Database Source: GROW Observatory",
     "crumbs": [
       "TidyTuesday",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>TidyTuesday Sample 2</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Homework 02</span>"
+    ]
+  },
+  {
+    "objectID": "tt/hw02-tt.html#tidytuesday-section-optional",
+    "href": "tt/hw02-tt.html#tidytuesday-section-optional",
+    "title": "Homework 02",
+    "section": "",
+    "text": "ImportantInstructions\n\n\n\nYou can count work on this week’s TidyTuesday toward the exceptional work required for an A in the Homework component.",
+    "crumbs": [
+      "TidyTuesday",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Homework 02</span>"
     ]
   },
   {
@@ -318,17 +329,6 @@
     ]
   },
   {
-    "objectID": "tt/hw01-tt.html",
-    "href": "tt/hw01-tt.html",
-    "title": "Homework 01",
-    "section": "",
-    "text": "TidyTuesday Section\nExplore the week’s TidyTuesday challenge. Develop a research question, then answer it through a short data story with effective visualization(s). Provide sufficient background for readers to grasp your narrative.\nDate: 2026-01-27 Data: Brazilian Companies Source: Open data CNPJ - December 2025 Article: Wikipedia’s List of largest Brazilian companies",
-    "crumbs": [
-      "Homework",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Homework 01</span>"
-    ]
-  },
-  {
     "objectID": "extra/extra-sample1.html",
     "href": "extra/extra-sample1.html",
     "title": "Extra Sample 1",
@@ -336,7 +336,7 @@
     "text": "Add content here",
     "crumbs": [
       "Extras",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Extra Sample 1</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Extra Sample 1</span>"
     ]
   },
   {
@@ -347,7 +347,7 @@
     "text": "Add content here",
     "crumbs": [
       "Extras",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Extra Sample 2</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Extra Sample 2</span>"
     ]
   }
 ]
