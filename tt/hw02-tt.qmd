@@ -1,0 +1,50 @@
+---
+title: "Homework 02"
+format: 
+  html: 
+    embed-resources: true
+---
+
+
+## TidyTuesday Section (optional)
+
+::: {.callout-important title="Instructions"}
+
+You can count work on this week's TidyTuesday toward the exceptional work required for an A in the Homework component.
+
+:::
+
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
+
+Date: 2026-02-03
+Data: Edible Plants Database
+Source: GROW Observatory
+
+# Research Question:
+What is the relationship between optimal plant germination temperature and optimal plant growing temperature, and how does this vary by required sunlight?
+
+```{r}
+# Reading in the Data + loading packages
+library(tidyverse)
+
+edible_plants <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-02-03/edible_plants.csv')
+
+edible_plants <- edible_plants |> 
+  filter(temperature_germination != is.na(temperature_germination)) |> 
+  filter(temperature_growing != is.na(temperature_growing))
+```
+
+```{r}
+# Creating a visualization
+edible_plants |> 
+  ggplot(aes(x = water, fill = sunlight)) +
+  labs(x = "Required Water",
+       title = "Required Water versus Required Sunlight",
+       subtitle = "How much water plants require relative to how much sunlight they require.",
+       fill = "Required Sunlight") +
+  scale_fill_viridis_d() + 
+  geom_bar()
+```
+
+
