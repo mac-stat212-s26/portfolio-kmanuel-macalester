@@ -17,3 +17,53 @@ You can count work on this week's TidyTuesday toward the exceptional work requir
 
 Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
 
+Date: 02/17/2026
+Data: Agricultural Production Statistics in New Zealand
+Source: Stats NZ (figure.nz)
+
+# Research Question: 
+
+```{r}
+# Reading in the Data + loading packages
+library(tidyverse)
+
+agriculture <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-02-17/dataset.csv')
+```
+
+```{r}
+# Creating new categorical variables 
+
+agriculture_sort <- agriculture |> 
+  mutate(cows = str_detect(measure, regex("cows|heifer|calf|calves|milk|cattle|bull", ignore_case = TRUE)),
+         pigs = str_detect(measure, regex("sow|pig")),
+         sheep = str_detect(measure, regex("sheep|ram|ewe|lamb")),
+         horses = str_detect(measure, regex("horse|stallion|foal")),
+         chickens = str_detect(measure, regex("hen|chicken|egg")),
+         deer = str_detect(measure, regex("deer|buck"))) |> 
+  filter(cows | pigs | sheep | horses | chickens | deer)
+
+cows_df <- agriculture_sort |> 
+  filter(cows)
+
+```
+
+
+```{r}
+# Visualization
+
+agriculture_sort |> 
+  filter(cows) |> 
+  mutate(beef = str_detect(measure, regex("beef|Beef"))) |> 
+  group_by(year_ended_june) |> 
+  ggplot(aes(x = year_ended_june, y = value, color = beef, group = measure)) +
+  geom_line() +
+  scale_color_viridis_d() +
+  labs(title = "Cattle Production Over Time: Beef and Other Production Activities", 
+       subtitle = "How has beef production changed over time, relative to other cattle production activities?", 
+       y = "Units Produced", 
+       x = "Year", 
+       color = "Beef Production", 
+       alt = "This line graph reveals how beef production activities compare to other miscellaneous cattle production activities over decades. It finds that beef production activities make up a good amount of cattle production activity, though they seem to be decreasing in units produced relative to their miscellaneous counterparts.",
+       caption = "Source: Stats NZ (figure.nz) | TidyTuesday W5 | Katherine Manuel")
+```
+
