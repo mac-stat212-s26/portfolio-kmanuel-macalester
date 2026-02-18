@@ -542,15 +542,17 @@ cookieconsent.run({
 <span id="cb6-5"><a href="#cb6-5"></a>       <span class="at">title =</span> <span class="st">"Brazilian Company Size and Legal Nature"</span>, </span>
 <span id="cb6-6"><a href="#cb6-6"></a>       <span class="at">subtitle =</span> <span class="st">"Micro companies dominate Brazil, and LLCs are the most popular company legal nature."</span>, </span>
 <span id="cb6-7"><a href="#cb6-7"></a>       <span class="at">caption =</span> <span class="st">"Source: Open Data CNPJ | Feb. 16, 2026 | Katherine Manuel"</span>) <span class="sc">+</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">scale_fill_viridis_d</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>()) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="hw01-tt_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="A bar graph detailing how legal nature varies by company size in Brazil. It shows that the majority of companies file as Limited Liability Business Companies (LLCs), with Sole Proprietorships being the second most popular legal nature overall. Micro companies are the most common." width="672"></p>
+<figure class="figure"><p><img src="hw01-tt_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" style="width:100.0%" alt="A bar graph detailing how legal nature varies by company size in Brazil. It shows that the majority of companies file as Limited Liability Business Companies (LLCs), with Sole Proprietorships being the second most popular legal nature overall. Micro companies are the most common."></p>
 </figure>
 </div>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># can change the orientation and change numbers, change the background theme to light grey lines </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 </section><section id="brazilian-companies-how-does-their-legal-nature-differ-with-copmany-size" class="level1"><h1>Brazilian Companies: How does their legal nature differ with copmany size?</h1>
 <p>This week’s TidyTuesday challenge utilizes data on Brazilian companies from the Brazilian Ministry of Finance. Based on the example research questions provided, the visualization above aims to answer the following question: What is the relationship between a Brazilian companies’ size and their legal nature? As such, the visualization focuses specifically on two key variables: Brazilian company size and Brazilian company legal natures. It ultimately finds that micro-companies are the largest company category by size, with “other” and small companies lagging behind. We also find that across all three categories, “LLC” is the most popular legal nature by far compared to the other 21 possible designations. State-Owned Enterprise slowly lags behind for both micro and small companies, but is noticeably absent for companies in the “other” category. Instead, silent partnerships and privately held corporations are more common after LLC. All other legal designations are relatively rare.</p>
@@ -1037,78 +1039,80 @@ cookieconsent.run({
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="an">title:</span><span class="co"> "Homework 01"</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">---</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a></span>
-<span id="cb8-5"><a href="#cb8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="fu">## TidyTuesday Section</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a></span>
-<span id="cb8-8"><a href="#cb8-8"></a>Explore the week's <span class="co">[</span><span class="ot">TidyTuesday</span><span class="co">](https://github.com/rfordatascience/tidytuesday)</span> challenge. Develop a research question, then answer it through a short data story with <span class="co">[</span><span class="ot">effective visualization(s)</span><span class="co">]({{&lt; var effective-viz-url &gt;}})</span>.  Provide sufficient background for readers to grasp your narrative.</span>
-<span id="cb8-9"><a href="#cb8-9"></a></span>
-<span id="cb8-10"><a href="#cb8-10"></a>Date: 2026-01-27</span>
-<span id="cb8-11"><a href="#cb8-11"></a>Data: Brazilian Companies</span>
-<span id="cb8-12"><a href="#cb8-12"></a>Source: Open data CNPJ - December 2025</span>
-<span id="cb8-13"><a href="#cb8-13"></a>Article: Wikipedia's List of largest Brazilian companies </span>
-<span id="cb8-14"><a href="#cb8-14"></a></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="fu"># Research Question:</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a>What is the relationship between a Brazilian companies' size and their legal nature?</span>
-<span id="cb8-17"><a href="#cb8-17"></a></span>
-<span id="cb8-20"><a href="#cb8-20"></a><span class="in">```{r}</span></span>
-<span id="cb8-21"><a href="#cb8-21"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb8-22"><a href="#cb8-22"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb8-23"><a href="#cb8-23"></a><span class="in">```</span></span>
-<span id="cb8-24"><a href="#cb8-24"></a></span>
-<span id="cb8-25"><a href="#cb8-25"></a></span>
-<span id="cb8-28"><a href="#cb8-28"></a><span class="in">```{r}</span></span>
-<span id="cb8-29"><a href="#cb8-29"></a>companies <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/companies.csv'</span>)</span>
-<span id="cb8-30"><a href="#cb8-30"></a>legal_nature <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/legal_nature.csv'</span>)</span>
-<span id="cb8-31"><a href="#cb8-31"></a>qualifications <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/qualifications.csv'</span>)</span>
-<span id="cb8-32"><a href="#cb8-32"></a>size <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/size.csv'</span>)</span>
-<span id="cb8-33"><a href="#cb8-33"></a><span class="in">```</span></span>
-<span id="cb8-34"><a href="#cb8-34"></a></span>
-<span id="cb8-37"><a href="#cb8-37"></a><span class="in">```{r}</span></span>
-<span id="cb8-38"><a href="#cb8-38"></a>companies_clean <span class="ot">&lt;-</span> companies <span class="sc">|&gt;</span> </span>
-<span id="cb8-39"><a href="#cb8-39"></a>  <span class="fu">mutate</span>(<span class="at">companysizeclean =</span> <span class="fu">case_when</span>(</span>
-<span id="cb8-40"><a href="#cb8-40"></a>    company_size <span class="sc">==</span> <span class="st">"micro-enterprise"</span> <span class="sc">~</span> <span class="st">"Micro"</span>,</span>
-<span id="cb8-41"><a href="#cb8-41"></a>    company_size <span class="sc">==</span> <span class="st">"small-enterprise"</span> <span class="sc">~</span> <span class="st">"Small"</span>,</span>
-<span id="cb8-42"><a href="#cb8-42"></a>    company_size <span class="sc">==</span> <span class="st">"other"</span> <span class="sc">~</span> <span class="st">"Other"</span></span>
-<span id="cb8-43"><a href="#cb8-43"></a>  ))</span>
-<span id="cb8-44"><a href="#cb8-44"></a></span>
-<span id="cb8-45"><a href="#cb8-45"></a>companies_clean <span class="sc">|&gt;</span> </span>
-<span id="cb8-46"><a href="#cb8-46"></a>  <span class="fu">group_by</span>(legal_nature) <span class="sc">|&gt;</span> </span>
-<span id="cb8-47"><a href="#cb8-47"></a>  <span class="fu">summarize</span>(<span class="fu">n</span>())</span>
-<span id="cb8-48"><a href="#cb8-48"></a></span>
-<span id="cb8-49"><a href="#cb8-49"></a>companies_clean <span class="ot">&lt;-</span> companies_clean <span class="sc">|&gt;</span> </span>
-<span id="cb8-50"><a href="#cb8-50"></a>  <span class="fu">filter</span>(legal_nature <span class="sc">!=</span> <span class="st">"Autonomous Social Service"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-51"><a href="#cb8-51"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Brazilian Branch of a Foreign Company"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-52"><a href="#cb8-52"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Consumer Cooperatives"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-53"><a href="#cb8-53"></a>           legal_nature <span class="sc">!=</span> <span class="st">"General Partnership"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-54"><a href="#cb8-54"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Individual Limited Liability Company (Simple)"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-55"><a href="#cb8-55"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Individual Limited Liability Company (Business)"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-56"><a href="#cb8-56"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Cooperative"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-57"><a href="#cb8-57"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Individual Real Estate Company"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-58"><a href="#cb8-58"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Partnership Limited by Shares"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-59"><a href="#cb8-59"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Simple General Partnership"</span> <span class="sc">&amp;</span></span>
-<span id="cb8-60"><a href="#cb8-60"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Private Association"</span>)</span>
-<span id="cb8-61"><a href="#cb8-61"></a><span class="in">```</span></span>
-<span id="cb8-62"><a href="#cb8-62"></a></span>
-<span id="cb8-63"><a href="#cb8-63"></a></span>
-<span id="cb8-64"><a href="#cb8-64"></a><span class="in">```{r, fig.alt= "A bar graph detailing how legal nature varies by company size in Brazil. It shows that the majority of companies file as Limited Liability Business Companies (LLCs), with Sole Proprietorships being the second most popular legal nature overall. Micro companies are the most common."}</span></span>
-<span id="cb8-65"><a href="#cb8-65"></a>companies_clean <span class="sc">|&gt;</span> </span>
-<span id="cb8-66"><a href="#cb8-66"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> companysizeclean, <span class="at">fill =</span> legal_nature)) <span class="sc">+</span></span>
-<span id="cb8-67"><a href="#cb8-67"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb8-68"><a href="#cb8-68"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Company Size"</span>, <span class="at">y =</span> <span class="st">"Companies by Legal Nature"</span>, <span class="at">fill =</span> <span class="st">"Legal Nature"</span>, </span>
-<span id="cb8-69"><a href="#cb8-69"></a>       <span class="at">title =</span> <span class="st">"Brazilian Company Size and Legal Nature"</span>, </span>
-<span id="cb8-70"><a href="#cb8-70"></a>       <span class="at">subtitle =</span> <span class="st">"Micro companies dominate Brazil, and LLCs are the most popular company legal nature."</span>, </span>
-<span id="cb8-71"><a href="#cb8-71"></a>       <span class="at">caption =</span> <span class="st">"Source: Open Data CNPJ | Feb. 16, 2026 | Katherine Manuel"</span>) <span class="sc">+</span></span>
-<span id="cb8-72"><a href="#cb8-72"></a>  <span class="fu">scale_fill_viridis_d</span>()</span>
-<span id="cb8-73"><a href="#cb8-73"></a></span>
-<span id="cb8-74"><a href="#cb8-74"></a><span class="co"># can change the orientation and change numbers, change the background theme to light grey lines </span></span>
-<span id="cb8-75"><a href="#cb8-75"></a><span class="in">```</span></span>
-<span id="cb8-76"><a href="#cb8-76"></a></span>
-<span id="cb8-77"><a href="#cb8-77"></a><span class="fu"># Brazilian Companies: How does their legal nature differ with copmany size? </span></span>
-<span id="cb8-78"><a href="#cb8-78"></a>This week's TidyTuesday challenge utilizes data on Brazilian companies from the Brazilian Ministry of Finance. Based on the example research questions provided, the visualization above aims to answer the following question: What is the relationship between a Brazilian companies' size and their legal nature? As such, the visualization focuses specifically on two key variables: Brazilian company size and Brazilian company legal natures. It ultimately finds that micro-companies are the largest company category by size, with "other" and small companies lagging behind. We also find that across all three categories, "LLC" is the most popular legal nature by far compared to the other 21 possible designations. State-Owned Enterprise slowly lags behind for both micro and small companies, but is noticeably absent for companies in the "other" category. Instead, silent partnerships and privately held corporations are more common after LLC.  All other legal designations are relatively rare. </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="an">title:</span><span class="co"> "Homework 01"</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">---</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="fu">## TidyTuesday Section</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a>Explore the week's <span class="co">[</span><span class="ot">TidyTuesday</span><span class="co">](https://github.com/rfordatascience/tidytuesday)</span> challenge. Develop a research question, then answer it through a short data story with <span class="co">[</span><span class="ot">effective visualization(s)</span><span class="co">]({{&lt; var effective-viz-url &gt;}})</span>.  Provide sufficient background for readers to grasp your narrative.</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a>Date: 2026-01-27</span>
+<span id="cb7-11"><a href="#cb7-11"></a>Data: Brazilian Companies</span>
+<span id="cb7-12"><a href="#cb7-12"></a>Source: Open data CNPJ - December 2025</span>
+<span id="cb7-13"><a href="#cb7-13"></a>Article: Wikipedia's List of largest Brazilian companies </span>
+<span id="cb7-14"><a href="#cb7-14"></a></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="fu"># Research Question:</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a>What is the relationship between a Brazilian companies' size and their legal nature?</span>
+<span id="cb7-17"><a href="#cb7-17"></a></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="in">```{r}</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-22"><a href="#cb7-22"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="in">```</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a></span>
+<span id="cb7-25"><a href="#cb7-25"></a></span>
+<span id="cb7-28"><a href="#cb7-28"></a><span class="in">```{r}</span></span>
+<span id="cb7-29"><a href="#cb7-29"></a>companies <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/companies.csv'</span>)</span>
+<span id="cb7-30"><a href="#cb7-30"></a>legal_nature <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/legal_nature.csv'</span>)</span>
+<span id="cb7-31"><a href="#cb7-31"></a>qualifications <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/qualifications.csv'</span>)</span>
+<span id="cb7-32"><a href="#cb7-32"></a>size <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/size.csv'</span>)</span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="in">```</span></span>
+<span id="cb7-34"><a href="#cb7-34"></a></span>
+<span id="cb7-37"><a href="#cb7-37"></a><span class="in">```{r}</span></span>
+<span id="cb7-38"><a href="#cb7-38"></a>companies_clean <span class="ot">&lt;-</span> companies <span class="sc">|&gt;</span> </span>
+<span id="cb7-39"><a href="#cb7-39"></a>  <span class="fu">mutate</span>(<span class="at">companysizeclean =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-40"><a href="#cb7-40"></a>    company_size <span class="sc">==</span> <span class="st">"micro-enterprise"</span> <span class="sc">~</span> <span class="st">"Micro"</span>,</span>
+<span id="cb7-41"><a href="#cb7-41"></a>    company_size <span class="sc">==</span> <span class="st">"small-enterprise"</span> <span class="sc">~</span> <span class="st">"Small"</span>,</span>
+<span id="cb7-42"><a href="#cb7-42"></a>    company_size <span class="sc">==</span> <span class="st">"other"</span> <span class="sc">~</span> <span class="st">"Other"</span></span>
+<span id="cb7-43"><a href="#cb7-43"></a>  ))</span>
+<span id="cb7-44"><a href="#cb7-44"></a></span>
+<span id="cb7-45"><a href="#cb7-45"></a>companies_clean <span class="sc">|&gt;</span> </span>
+<span id="cb7-46"><a href="#cb7-46"></a>  <span class="fu">group_by</span>(legal_nature) <span class="sc">|&gt;</span> </span>
+<span id="cb7-47"><a href="#cb7-47"></a>  <span class="fu">summarize</span>(<span class="fu">n</span>())</span>
+<span id="cb7-48"><a href="#cb7-48"></a></span>
+<span id="cb7-49"><a href="#cb7-49"></a>companies_clean <span class="ot">&lt;-</span> companies_clean <span class="sc">|&gt;</span> </span>
+<span id="cb7-50"><a href="#cb7-50"></a>  <span class="fu">filter</span>(legal_nature <span class="sc">!=</span> <span class="st">"Autonomous Social Service"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-51"><a href="#cb7-51"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Brazilian Branch of a Foreign Company"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-52"><a href="#cb7-52"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Consumer Cooperatives"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-53"><a href="#cb7-53"></a>           legal_nature <span class="sc">!=</span> <span class="st">"General Partnership"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-54"><a href="#cb7-54"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Individual Limited Liability Company (Simple)"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-55"><a href="#cb7-55"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Individual Limited Liability Company (Business)"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-56"><a href="#cb7-56"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Cooperative"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-57"><a href="#cb7-57"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Individual Real Estate Company"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-58"><a href="#cb7-58"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Partnership Limited by Shares"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-59"><a href="#cb7-59"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Simple General Partnership"</span> <span class="sc">&amp;</span></span>
+<span id="cb7-60"><a href="#cb7-60"></a>           legal_nature <span class="sc">!=</span> <span class="st">"Private Association"</span>)</span>
+<span id="cb7-61"><a href="#cb7-61"></a><span class="in">```</span></span>
+<span id="cb7-62"><a href="#cb7-62"></a></span>
+<span id="cb7-63"><a href="#cb7-63"></a></span>
+<span id="cb7-64"><a href="#cb7-64"></a><span class="in">```{r, fig.width=14, fig.height=9, out.width="100%", fig.alt= "A bar graph detailing how legal nature varies by company size in Brazil. It shows that the majority of companies file as Limited Liability Business Companies (LLCs), with Sole Proprietorships being the second most popular legal nature overall. Micro companies are the most common."}</span></span>
+<span id="cb7-65"><a href="#cb7-65"></a>companies_clean <span class="sc">|&gt;</span> </span>
+<span id="cb7-66"><a href="#cb7-66"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> companysizeclean, <span class="at">fill =</span> legal_nature)) <span class="sc">+</span></span>
+<span id="cb7-67"><a href="#cb7-67"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb7-68"><a href="#cb7-68"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Company Size"</span>, <span class="at">y =</span> <span class="st">"Companies by Legal Nature"</span>, <span class="at">fill =</span> <span class="st">"Legal Nature"</span>, </span>
+<span id="cb7-69"><a href="#cb7-69"></a>       <span class="at">title =</span> <span class="st">"Brazilian Company Size and Legal Nature"</span>, </span>
+<span id="cb7-70"><a href="#cb7-70"></a>       <span class="at">subtitle =</span> <span class="st">"Micro companies dominate Brazil, and LLCs are the most popular company legal nature."</span>, </span>
+<span id="cb7-71"><a href="#cb7-71"></a>       <span class="at">caption =</span> <span class="st">"Source: Open Data CNPJ | Feb. 16, 2026 | Katherine Manuel"</span>) <span class="sc">+</span></span>
+<span id="cb7-72"><a href="#cb7-72"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb7-73"><a href="#cb7-73"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb7-74"><a href="#cb7-74"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>()) <span class="sc">+</span></span>
+<span id="cb7-75"><a href="#cb7-75"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb7-76"><a href="#cb7-76"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-77"><a href="#cb7-77"></a><span class="in">```</span></span>
+<span id="cb7-78"><a href="#cb7-78"></a></span>
+<span id="cb7-79"><a href="#cb7-79"></a><span class="fu"># Brazilian Companies: How does their legal nature differ with copmany size? </span></span>
+<span id="cb7-80"><a href="#cb7-80"></a>This week's TidyTuesday challenge utilizes data on Brazilian companies from the Brazilian Ministry of Finance. Based on the example research questions provided, the visualization above aims to answer the following question: What is the relationship between a Brazilian companies' size and their legal nature? As such, the visualization focuses specifically on two key variables: Brazilian company size and Brazilian company legal natures. It ultimately finds that micro-companies are the largest company category by size, with "other" and small companies lagging behind. We also find that across all three categories, "LLC" is the most popular legal nature by far compared to the other 21 possible designations. State-Owned Enterprise slowly lags behind for both micro and small companies, but is noticeably absent for companies in the "other" category. Instead, silent partnerships and privately held corporations are more common after LLC.  All other legal designations are relatively rare. </span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
