@@ -95,9 +95,11 @@ str_view(string3)
 
 **Exercise:** Create the string `It's Thursday`. What happens if you put the string inside single quotes? Double quotes?
 
+If you put the string in single quotes, it will stop at the apostrophe in "It's."
+
 ```{r ex_create_string}
 # Your code
-
+thursday <- "It's Thursday."
 ```
 
 
@@ -115,8 +117,14 @@ Given that `\` is a special character, how can we put the `\` character in strin
 
 **Exercise:** Create the string `C:\Users`. What happens when you don't escape the `\`?
 
+When you don't escape the '\', it returns an error. 
+
 ```{r ex_create_string_slash}
 # Your code
+
+users <- "'C:\\Users'"
+
+str_view(users)
 ```
 
 
@@ -171,7 +179,11 @@ df_dates <- tibble(
     day = c(3, 4, 5)
 )
 
-
+df_dates %>%  
+  mutate(
+    MDY = str_c(month, " ", day, " ", year),
+    MDY2 = str_glue("{month} {day} {year}")
+  )
 ```
 
 
@@ -217,7 +229,14 @@ df <- tibble(
 )
 
 
+str_sub(df, start = -4, end = -3)
 
+df <- df %>% 
+  mutate(
+    word_length = str_length(word), 
+    middle_pos = ceiling(word_length/2),
+    middle_letter = str_sub(word, middle_pos, middle_pos)
+  )
 ```
 
 
@@ -280,7 +299,7 @@ str_view(words, "[^aeiou]y[^aeiou]")
 
 ```{r ex_regex_classes}
 # Your code
-
+str_view(words, "[aeiou][aeiou]m")
 ```
 
 
@@ -297,7 +316,7 @@ str_view(fruit, "apple|melon|nut")
 
 ```{r ex_regex_alternation}
 # Your code
-
+str_view(fruit, "aa|ee|ii|oo|uu")
 ```
 
 
@@ -312,7 +331,9 @@ str_view(fruit, "apple|melon|nut")
 ```{r ex_regex_start_end_group}
 # Your code
 
+str_view(words, "^y")
 
+str_view(words, "^[^y]")
 ```
 
 
