@@ -69,6 +69,10 @@ book:
       - tt/hw01-tt.qmd
       - tt/hw02-tt.qmd
       - tt/hw03-tt.qmd
+      - tt/hw06-tt.qmd
+      - tt/hw07-tt.qmd
+      - tt/hw07.5-tt.qmd
+      - tt/hw08-tt.qmd
 
     - part: "Pre-Class Learnings"
       chapters:
@@ -81,6 +85,16 @@ book:
       - ica/04_adv_maps/code/04-adv-maps-1-notes.qmd
       - ica/06_data_wrangling1/06-wrangling-1-notes.qmd
       - ica/07_wrangling2/07-wrangling-2-notes.qmd
+      - ica/08_missingdata/08-missing-data-notes.qmd
+      - ica/09_functions/09-functions-notes.qmd
+      - ica/10_baser/10-base-r-notes.qmd
+      - ica/11_iteration/11-iteration-1-notes.qmd
+      - ica/12_iteration2/12-iteration-2-notes.qmd
+      - ica/14_apis2/14-apis-2-notes.qmd
+      - ica/15_scraping/15-scraping-notes.qmd
+      - ica/16_databases/16-databases-notes.qmd
+      - ica/18_interactiveviz/18-interactive-viz-notes.qmd
+
 
     - part: "Extras"
       chapters:

@@ -1,0 +1,51 @@
+---
+title: "Homework 06"
+format: 
+  html: 
+    embed-resources: true
+---
+
+
+## TidyTuesday Section (optional)
+
+::: {.callout-important title="Instructions"}
+
+You can count work on this week's TidyTuesday toward the exceptional work required for an A in the Homework component.
+
+:::
+
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
+
+Date: 2026-03-24 \
+Data: One Million Digits of Pi \
+Source: Manasseh, #TidyTuesday Community \
+
+# Research Question: \
+What is the most common digit in the first 1000001 digits of pi?
+
+```{r}
+# Reading in the data + packages
+
+library(ggplot2)
+library(tidyverse)
+pi_digits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-03-24/pi_digits.csv')
+```
+
+```{r, fig.alt = "This bar graph shows how often digits show up in the first million digits of pi."}
+# Visualizing the data
+
+pi_digits |> 
+  count(digit) |> 
+  mutate(digit = as.factor(digit)) |> 
+  ggplot(aes(x = digit, y = n/10000)) +
+  geom_col() +
+  geom_text(aes(label = n/10000), vjust = -0.5) +
+  theme_minimal() +
+  labs(caption = "Source: Multiple | TidyTuesday HW6 | Katherine Manuel",
+       title = "The First Million Digits of Pi Do Not Appear Equally",
+       x = "Pi Digits",
+       y = "Number of Occurences (in ten-thousands)",
+       subtitle = "Digits such as 6 and 1 appear less frequently, while digits 4 and 5 are more frequent.")
+```
+

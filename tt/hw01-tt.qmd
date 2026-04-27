@@ -55,7 +55,7 @@ companies_clean <- companies_clean |>
 ```
 
 
-```{r, fig.alt= "A bar graph detailing how legal nature varies by company size in Brazil. It shows that the majority of companies file as Limited Liability Business Companies (LLCs), with Sole Proprietorships being the second most popular legal nature overall. Micro companies are the most common."}
+```{r, fig.width=14, fig.height=9, out.width="100%", fig.alt= "A bar graph detailing how legal nature varies by company size in Brazil. It shows that the majority of companies file as Limited Liability Business Companies (LLCs), with Sole Proprietorships being the second most popular legal nature overall. Micro companies are the most common."}
 companies_clean |> 
   ggplot(aes(x = companysizeclean, fill = legal_nature)) +
   geom_bar() +
@@ -63,9 +63,11 @@ companies_clean |>
        title = "Brazilian Company Size and Legal Nature", 
        subtitle = "Micro companies dominate Brazil, and LLCs are the most popular company legal nature.", 
        caption = "Source: Open Data CNPJ | Feb. 16, 2026 | Katherine Manuel") +
-  scale_fill_viridis_d()
-
-# can change the orientation and change numbers, change the background theme to light grey lines 
+  scale_fill_viridis_d() +
+  theme_bw() +
+  scale_y_continuous(labels = scales::label_comma()) +
+  theme(legend.position = "bottom") +
+  guides(fill = guide_legend(nrow = 3, byrow = TRUE))
 ```
 
 # Brazilian Companies: How does their legal nature differ with copmany size? 

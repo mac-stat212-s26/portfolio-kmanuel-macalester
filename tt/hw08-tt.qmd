@@ -1,0 +1,72 @@
+---
+title: "Homework 08"
+format: 
+  html: 
+    embed-resources: true
+---
+
+
+## TidyTuesday Section (optional)
+
+::: {.callout-important title="Instructions"}
+
+You can count work on this week's TidyTuesday toward the exceptional work required for an A in the Homework component.
+
+:::
+
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
+
+```{r}
+# reading in the data
+financing_schemes <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-04-21/financing_schemes.csv')
+health_spending <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-04-21/health_spending.csv')
+spending_purpose <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-04-21/spending_purpose.csv')
+
+```
+
+```{r}
+# loading packages
+
+library(countrycode)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+```
+
+```{r, fig.alt = "This interactive choropleth map shows health spending by country per year, from 2016-2023."}
+# cleaning data for visualization
+
+spending_purpose <- spending_purpose |>
+  mutate(continent = countrycode(country_name, origin = "country.name", destination = "continent"))
+
+spending_purpose_map <- spending_purpose |>
+  filter(str_detect(indicator_code, "_usd2023")) |> 
+  filter(!is.na(continent)) |>
+  group_by(iso3_code, country_name, continent, year) |>
+  summarize(total_spending = sum(value, na.rm = TRUE), .groups = "drop")
+
+plot_ly(
+  spending_purpose_map,
+  type = "choropleth",
+  locations = ~iso3_code,
+  locationmode = "ISO-2",
+  z = ~total_spending,
+  frame = ~year,
+  text = ~paste("Country:", country_name, "<br>Year:", year, "<br>Spending:", round(total_spending, 2)),
+  hoverinfo = "text",
+  colorscale = "Viridis"
+) |>
+  layout(
+    title = "Health Spending by Country per Year",
+    geo = list(showframe = FALSE, showcoastlines = TRUE),
+    annotations = list(
+      x = 1, y = -0.05,
+      text = "Source: WHO Global Health Expenditure Database (GHED) | TidyTuesday W13 | Katherine Manuel",
+      showarrow = FALSE,
+      xref = "paper", yref = "paper",
+      xanchor = "right", yanchor = "auto")
+  )
+```
+
