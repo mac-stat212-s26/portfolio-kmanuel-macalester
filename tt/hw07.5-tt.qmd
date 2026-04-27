@@ -1,0 +1,70 @@
+---
+title: "Homework 08"
+format: 
+  html: 
+    embed-resources: true
+---
+
+
+## TidyTuesday Section (optional)
+
+::: {.callout-important title="Instructions"}
+
+You can count work on this week's TidyTuesday toward the exceptional work required for an A in the Homework component.
+
+:::
+
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
+
+```{r}
+# reading in the data
+
+beaufort_scale <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-04-14/beaufort_scale.csv')
+birds <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-04-14/birds.csv')
+sea_states <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-04-14/sea_states.csv')
+ships <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-04-14/ships.csv')
+
+```
+
+```{r}
+# loading packages
+
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r}
+# cleaning data for viz
+new_birds <- birds |> 
+  filter(!is.na(age)) |> 
+  filter(!is.na(count)) |> 
+  
+  # removing ages from birds
+  mutate(species_common_name = str_trim(str_remove(species_common_name, " [A-Z]+$"))) |> 
+  mutate(species_common_name = str_trim(str_remove(species_common_name, "AD"))) |> 
+  mutate(species_common_name = str_remove(species_common_name, " SUB")) |> 
+  
+  # removing all unidentified/dubiously-identified birds
+  filter(!str_detect(species_common_name, "unidentified")) |> 
+  filter(!str_detect(species_common_name, "/")) |> 
+  
+  # changing age order
+  mutate(age = factor(age, levels = c("juvenile", "immature", "subadult", "adult")))
+```
+
+```{r, fig.alt = "This heat map shows how NZ bird grouping patterns by species and age."}
+# viz
+new_birds |> 
+  ggplot(aes(x = age, y = species_common_name, fill = count)) +
+  geom_tile() +
+  scale_fill_viridis_c(trans = "log") +
+  theme_minimal() +
+  labs(title = "Most NZ Seabirds Move In Smaller Groups",
+       caption = "Source: Te Papa Tongarewa, The Museum of New Zealand | TidyTuesday HW8 | Katherine Manuel",
+       x = "Species",
+       y = "Age Group",
+       fill = "Average Number of Birds in Group")
+
+```

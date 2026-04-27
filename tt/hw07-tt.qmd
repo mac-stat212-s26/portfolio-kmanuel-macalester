@@ -1,0 +1,76 @@
+---
+title: "Homework 07"
+format: 
+  html: 
+    embed-resources: true
+---
+
+
+## TidyTuesday Section (optional)
+
+::: {.callout-important title="Instructions"}
+
+You can count work on this week's TidyTuesday toward the exceptional work required for an A in the Homework component.
+
+:::
+
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
+
+```{r}
+# reading in the data
+
+repairs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-04-07/repairs.csv')
+repairs_text <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-04-07/repairs_text.csv')
+```
+
+```{r}
+# loading packages
+
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(countrycode)
+```
+
+```{r}
+# cleaning data for viz
+
+new_repairs <- repairs |> 
+  filter(!is.na(estimated_year_of_production)) |> 
+  filter(!is.na(repairability)) |> 
+  filter(!is.na(repaired)) |> 
+  filter(!is.na(country)) |> 
+  filter(estimated_year_of_production > 1900) |> 
+  filter(estimated_year_of_production < 2026)
+```
+
+```{r, fig.alt = "This interactive choropleth map show how repairability for products of different production years varies across countries."}
+# creating the visualization
+
+new_repairs |>
+  group_by(country, estimated_year_of_production) |>
+  summarize(repairability = mean(repairability, na.rm = TRUE), .groups = "drop") |>
+  mutate(iso3_code = countrycode(country, origin = "iso2c", destination = "iso3c")) |>
+  plot_ly(
+    type = "choropleth",
+    locations = ~iso3_code,
+    locationmode = "ISO-3",
+    z = ~repairability,
+    frame = ~estimated_year_of_production,
+    text = ~paste("Country:", country, "<br>Production Year:", estimated_year_of_production,
+                  "<br>Repairability:", repairability),
+    hoverinfo = "text",
+    colorscale = "Viridis") |>
+  layout(
+    title = "Repairability by Country and Production Year",
+    geo = list(showframe = FALSE, showcoastlines = TRUE),
+    annotations = list(
+      x = 1, y = -0.05,
+      text = "Source: Repair Monitor | TidyTuesday HW7 | Katherine Manuel",
+      showarrow = FALSE,
+      xref = "paper", yref = "paper",
+      xanchor = "right", yanchor = "auto"))
+```
+

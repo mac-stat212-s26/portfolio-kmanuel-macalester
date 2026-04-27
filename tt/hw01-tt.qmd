@@ -1,0 +1,74 @@
+---
+title: "Homework 01"
+---
+
+
+## TidyTuesday Section
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
+
+Date: 2026-01-27
+Data: Brazilian Companies
+Source: Open data CNPJ - December 2025
+Article: Wikipedia's List of largest Brazilian companies 
+
+# Research Question:
+What is the relationship between a Brazilian companies' size and their legal nature?
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+```
+
+
+```{r}
+companies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/companies.csv')
+legal_nature <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/legal_nature.csv')
+qualifications <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/qualifications.csv')
+size <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2026/2026-01-27/size.csv')
+```
+
+```{r}
+companies_clean <- companies |> 
+  mutate(companysizeclean = case_when(
+    company_size == "micro-enterprise" ~ "Micro",
+    company_size == "small-enterprise" ~ "Small",
+    company_size == "other" ~ "Other"
+  ))
+
+companies_clean |> 
+  group_by(legal_nature) |> 
+  summarize(n())
+
+companies_clean <- companies_clean |> 
+  filter(legal_nature != "Autonomous Social Service" &
+           legal_nature != "Brazilian Branch of a Foreign Company" &
+           legal_nature != "Consumer Cooperatives" &
+           legal_nature != "General Partnership" &
+           legal_nature != "Individual Limited Liability Company (Simple)" &
+           legal_nature != "Individual Limited Liability Company (Business)" &
+           legal_nature != "Cooperative" &
+           legal_nature != "Individual Real Estate Company" &
+           legal_nature != "Partnership Limited by Shares" &
+           legal_nature != "Simple General Partnership" &
+           legal_nature != "Private Association")
+```
+
+
+```{r, fig.width=14, fig.height=9, out.width="100%", fig.alt= "A bar graph detailing how legal nature varies by company size in Brazil. It shows that the majority of companies file as Limited Liability Business Companies (LLCs), with Sole Proprietorships being the second most popular legal nature overall. Micro companies are the most common."}
+companies_clean |> 
+  ggplot(aes(x = companysizeclean, fill = legal_nature)) +
+  geom_bar() +
+  labs(x = "Company Size", y = "Companies by Legal Nature", fill = "Legal Nature", 
+       title = "Brazilian Company Size and Legal Nature", 
+       subtitle = "Micro companies dominate Brazil, and LLCs are the most popular company legal nature.", 
+       caption = "Source: Open Data CNPJ | Feb. 16, 2026 | Katherine Manuel") +
+  scale_fill_viridis_d() +
+  theme_bw() +
+  scale_y_continuous(labels = scales::label_comma()) +
+  theme(legend.position = "bottom") +
+  guides(fill = guide_legend(nrow = 3, byrow = TRUE))
+```
+
+# Brazilian Companies: How does their legal nature differ with copmany size? 
+This week's TidyTuesday challenge utilizes data on Brazilian companies from the Brazilian Ministry of Finance. Based on the example research questions provided, the visualization above aims to answer the following question: What is the relationship between a Brazilian companies' size and their legal nature? As such, the visualization focuses specifically on two key variables: Brazilian company size and Brazilian company legal natures. It ultimately finds that micro-companies are the largest company category by size, with "other" and small companies lagging behind. We also find that across all three categories, "LLC" is the most popular legal nature by far compared to the other 21 possible designations. State-Owned Enterprise slowly lags behind for both micro and small companies, but is noticeably absent for companies in the "other" category. Instead, silent partnerships and privately held corporations are more common after LLC.  All other legal designations are relatively rare. 
